@@ -1,5 +1,6 @@
 package com.example.springapitask.users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user) {
-         userService.createUser(user);
+    public ResponseEntity createUser(@RequestBody User user) {
+        return userService.createUser(user);
     }
 
     @DeleteMapping(path = "/{userId}")

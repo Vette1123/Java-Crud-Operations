@@ -1,5 +1,6 @@
 package com.example.springapitask.users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,12 +27,13 @@ public class UserService {
         }
         return userRepository.findById(id).orElse(null);
     }
-    public void createUser(User user) {
+    public ResponseEntity createUser(User user) {
         Optional<User> userOptional = userRepository.findByEmail(user.getEmail());
         if (userOptional.isPresent()) {
             throw new IllegalArgumentException("User with id " + user.getEmail() + " already exists");
         }
-        userRepository.save(user);
+        return new ResponseEntity(userRepository.save(user), org.springframework.http.HttpStatus.CREATED);
+//        userRepository.save(user);
     }
     public void deleteUser(Long id) {
         boolean isDeleted = userRepository.existsById(id);
